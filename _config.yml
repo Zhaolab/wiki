@@ -1,0 +1,24 @@
+# Document:
+# http://simiki.org/docs/configuration.html
+
+url: https://zhaolab/github.io
+title: Wiki for zhaolab
+keywords: Wiki
+description: Wiki for protocols and pipeline in zhaolab
+author: runsheng
+
+category:
+  - name: protocol  # the category directory name
+    label: protocol  # alias name of category, used in index page
+  - name: pipeline
+    label: pipeline
+
+default_ext: md
+pygments: true
+debug: false
+
+##### Deploy #####
+deploy:
+  - type: git
+    remote: origin
+    branch: master
