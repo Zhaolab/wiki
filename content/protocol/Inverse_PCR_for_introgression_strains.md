@@ -40,10 +40,11 @@ Digest 150 ng genomic DNA with HindIII-HF, 37 C for 3h.
 **25 ul system**
 
 **PCR setting**
-30 cycles
-	95,30s
-	64,20s
-	72,3min
+
+	-30 cycles-
+	--95,30s--
+	--64,20s--
+	--72,3min--
 
 
 - Ligation mix from step 3, 2.5 ul (10x dilution)
@@ -59,10 +60,10 @@ Digest 150 ng genomic DNA with HindIII-HF, 37 C for 3h.
 **25 ul system**
 
 **PCR setting**
-30 cycles
-	95 C,30s
-	64 C,20s
-	72 C,3min
+	-30 cycles-
+	--95 C,30s--
+	--64 C,20s--
+	--72 C,3min--
 
 
 - 100X dilution PCR product from step 4, 2.5 ul
