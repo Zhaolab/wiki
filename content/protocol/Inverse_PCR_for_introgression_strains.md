@@ -60,6 +60,7 @@ Digest 150 ng genomic DNA with HindIII-HF, 37 C for 3h.
 **25 ul system**
 
 **PCR setting**
+
 	-30 cycles-
 	--95 C,30s--
 	--64 C,20s--
