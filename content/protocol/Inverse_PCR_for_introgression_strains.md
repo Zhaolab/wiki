@@ -41,15 +41,17 @@ Digest 150 ng genomic DNA with HindIII-HF, 37 C for 3h.
 
 **PCR setting**
 30 cycles
-	95,30s--64,20s--72,3min
+	95,30s
+	64,20s
+	72,3min
 
 
 - Ligation mix from step 3, 2.5 ul (10x dilution)
-- Primer **GFPin** (F and R mixture), 1 ul
-- dNTPs, 2 ul
-- Phusion 5X buffer, 2.5 ul
-- Phusion Polymerase, 0.12 ul
-- H2O, add to 25 ul
+- Primer **GFPin** (F and R mixture), 2.5 ul
+- dNTPs, 2.5 ul
+- Phusion 5X GC buffer, 5 ul
+- Phusion Polymerase, 0.25 ul
+- H2O,  12.25 ul
 
 
 #### 5. Second round PCR
@@ -58,12 +60,14 @@ Digest 150 ng genomic DNA with HindIII-HF, 37 C for 3h.
 
 **PCR setting**
 30 cycles
-	95,30s--64,20s--72,3min
+	95 C,30s
+	64 C,20s
+	72 C,3min
 
 
 - 100X dilution PCR product from step 4, 2.5 ul
-- Primer **GFPout** (F and R mixture), 1 ul
-- dNTPs, 2 ul
-- Phusion 5X buffer, 2.5 ul
-- Phusion Polymerase, 0.12 ul
-- H2O, add to 25 ul
+- Primer **GFPout** (F and R mixture), 2.5 ul
+- dNTPs, 2.5 ul
+- Phusion 5X GC buffer, 5 ul
+- Phusion Polymerase, 0.25 ul
+- H2O, 12.25 ul
