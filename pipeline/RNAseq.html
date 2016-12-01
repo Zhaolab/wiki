@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>Quick guide for parameters in tophat-cufflinks in nematode RNA-seq analysis - Wiki for zhaolab</title>
+    <meta name="keywords" content="Wiki"/>
+    <meta name="description" content="Wiki for protocols and pipeline in zhaolab"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/">Home</a>&nbsp;&#187;&nbsp;<a href="/#pipeline">pipeline</a>&nbsp;&#187;&nbsp;Quick guide for parameters in tophat-cufflinks in nematode RNA-seq analysis
+    <span class="updated">Updated&nbsp;
+      2015/05/17 12:00
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">Quick guide for parameters in tophat-cufflinks in nematode RNA-seq analysis</div>
+
+  <h2 id="the-summary-of-tophat-cufflinks-protocol-is-like-that">The summary of tophat-cufflinks protocol is like that:</h2>
+<h3 id="step1-generate-a-tophat_out-folder-with-bam-files">step1: generate a tophat_out folder with bam files</h3>
+<div class="hlcode"><pre>tophat  -G genes.gtf &lt;index&gt;  sample1_1.fq  sample1_2.fq
+tophat  -G genes.gtf &lt;index&gt;  sample2_1.fq  sample2_2.fq
+</pre></div>
+
+
+<h3 id="step2-generate-new-gtf-files-assemble-isoform">step2: generate new .gtf files (assemble isoform)</h3>
+<div class="hlcode"><pre>cufflinks sample1/accepted_hits.bam
+cufflinks sample2/accepted_hits.bam
+</pre></div>
+
+
+<h3 id="step3-prepare-a-text-file-named-assembliestxt-with-following-gtf-files">step3: prepare a text file named assemblies.txt with following gtf files</h3>
+<div class="hlcode"><pre>cat <span class="s">&lt;&lt; EOF &gt; assemblies.txt</span>
+<span class="s">&gt;sample1/transcript.gtf</span>
+<span class="s">&gt;sample2/transcript.gtf</span>
+<span class="s">&gt;EOF</span>
+</pre></div>
+
+
+<h3 id="step4-run-cuffmerge-to-generate-mergedgtf">step4: run cuffmerge to generate merged.gtf</h3>
+<div class="hlcode"><pre>cuffmerge -g genes.gtf -s genome.fa assemblies.txt
+</pre></div>
+
+
+<h3 id="step5-compare-gene-expressions-of-two-samples">step5: compare gene expressions of two samples</h3>
+<div class="hlcode"><pre>cuffdiff merged.gtf  sample1/accepted_hits.bam  sample2/accepted_hits.bam
+</pre></div>
+
+
+<hr />
+<h2 id="the-protocol-specifically-used-for-our-data">The protocol specifically used for our data</h2>
+<h3 id="step0-access-to-the-data">step0: access to the data</h3>
+<p>Open the web serve at <strong><em>, the passwd is </em></strong></p>
+<p>The result can be downloaded and viewed in ***</p>
+<p>in the shell, type: 'cd ~/new2/RNAseq/trim'</p>
+<h3 id="step1-generate-a-tophat_out-folder-with-bam-files-using-only-ju1421-1-as-example">step1: generate a tophat_out folder with bam files, using only JU1421-1 as example</h3>
+<p>"-N 8 \ --read-gap-length 8 \ --read-edit-dist 8 \" are generally called mismatch, this means the mismatch for the mapping is 8.
+Using this parameter, we can only find 69% JU1421 reads are mapped.</p>
+<div class="hlcode"><pre>tophat2 -p 15 -i 20 -I 5000 -g 10 <span class="se">\</span>
+-N 8 <span class="se">\</span>
+--read-gap-length 8 <span class="se">\</span>
+--read-edit-dist 8 <span class="se">\</span>
+-o ./tophat_out/JU1421-1  <span class="se">\</span>
+-G ../genome/GENES.gff3 <span class="se">\</span>
+../genome/cb4_ws242 <span class="se">\</span>
+JU1421-1_S1_L001_R1_001_trimpair.fastq.gz,JU1421-1_S1_L001_R2_001_trimpair.fastq.gz<span class="se">\</span>
+</pre></div>
+
+
+<p>All reads should be mapped using the same parameters. For AF16, the example is:</p>
+<div class="hlcode"><pre>tophat2 -p 15 -i 20 -I 5000 -g 10 <span class="se">\</span>
+-N 8 <span class="se">\</span>
+--read-gap-length 8 <span class="se">\</span>
+--read-edit-dist 8 <span class="se">\</span>
+-o ./tophat_out/AF16-1  <span class="se">\</span>
+-G ../genome/GENES.gff3 <span class="se">\</span>
+../genome/cb4_ws242 <span class="se">\</span>
+AF16-1_S1_L001_R1_001_trimpair.fastq.gz,AF16-1_S1_L001_R2_001_trimpair.fastq.gz<span class="se">\</span>
+</pre></div>
+
+
+<h3 id="step2-generate-new-gtf-files-assemble-isoform_1">step2: generate new .gtf files (assemble isoform)</h3>
+<div class="hlcode"><pre>cufflinks -p 8 -o ./tophat_out/JU1421-1 ./tophat_out/JU1421-1/accepted_hits.bam
+cufflinks -p 8 -o ./tophat_out/JU1421-2 ./tophat_out/JU1421-2/accepted_hits.bam
+cufflinks -p 8 -o ./tophat_out/JU1421-3 ./tophat_out/JU1421-3/accepted_hits.bam
+cufflinks -p 8 -o ./tophat_out/AF16-1 ./tophat_out/AF16-1/accepted_hits.bam
+cufflinks -p 8 -o ./tophat_out/AF16-2 ./tophat_out/AF16-2/accepted_hits.bam
+cufflinks -p 8 -o ./tophat_out/AF16-3 ./tophat_out/AF16-3/accepted_hits.bam
+</pre></div>
+
+
+<h3 id="step3-prepare-a-text-file-named-assembliestxt-with-following-gtf-files_1">step3: prepare a text file named assemblies.txt with following gtf files</h3>
+<div class="hlcode"><pre>cat <span class="s">&lt;&lt; EOF &gt; assemblies.txt</span>
+<span class="s">&gt;JU1421-1/transcript.gtf</span>
+<span class="s">&gt;JU1421-2/transcript.gtf</span>
+<span class="s">&gt;JU1421-3/transcript.gtf</span>
+<span class="s">&gt;AF16-1/transcript.gtf</span>
+<span class="s">&gt;AF16-2/transcript.gtf</span>
+<span class="s">&gt;AF16-3/transcript.gtf</span>
+<span class="s">&gt;EOF</span>
+</pre></div>
+
+
+<h3 id="step4-run-cuffmerge-to-generate-mergedgtf_1">step4: run cuffmerge to generate merged.gtf</h3>
+<div class="hlcode"><pre>cuffmerge -g ../genome/GENES.gff3 -s ../genome/cb4_ws242.fa assemblies.txt
+</pre></div>
+
+
+<h3 id="step5-compare-gene-expressions-of-two-samples_1">step5: compare gene expressions of two samples</h3>
+<div class="hlcode"><pre>cuffdiff -p 8 merged.gtf –L JU1421,AF16<span class="se">\</span>
+./JU1421-1/accepted_hits.bam,<span class="se">\</span>
+./JU1421-2/accepted_hits.bam,<span class="se">\</span>
+./JU1421-3/accepted_hits.bam <span class="se">\</span>
+./AF16-1/accepted_hits.bam,<span class="se">\</span>
+./AF16-2/accepted_hits.bam,<span class="se">\</span>
+./AF16-3/accepted_hits.bam <span class="se">\</span>
+</pre></div>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2016 runsheng.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-12-01 19:05:31</p>
+      </span>
+    </div>
+  </body>
+</html>
